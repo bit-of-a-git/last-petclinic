@@ -1,0 +1,77 @@
+version: '3.7'
+services:
+  frontend:
+    container_name: spring-petclinic-angular
+    build: ./spring-petclinic-angular
+    # image: 16.3-alpine-spring-petclinic-angular:latest
+    image: cathysimms/spring-petclinic-angular:latest
+    depends_on:
+    - backend
+    networks: 
+     - my_network
+    ports:
+    - target: 8080
+      published: 8080
+      protocol: tcp
+  backend:
+    # environment:
+    #   # MYSQL_DATABASE: 'petclinic'
+    #   USER_NAME: ${MY_USER}
+    #   USER_PASSWORD: ${MY_PASSWORD}
+    #   # MYSQL_ROOT_PASSWORD: ${MY_PASSWORD}
+    container_name: spring-petclinic-rest
+    build: ./spring-petclinic-rest
+    # image: openjdk-spring-petclinic-rest:latest  
+    image: cathysimms/spring-petclinic-rest:latest
+    # depends_on:
+    #  - petclinic
+    networks: 
+     - my_network
+    ports:
+    - target: 9966
+      published: 9966 
+      protocol: tcp
+  nginx:
+   container_name: nginx
+   image: nginx:latest
+   networks: 
+     - my_network
+   ports:
+    - target: 80
+      published: 80 
+      protocol: tcp
+   volumes:
+    - type: bind
+      source: ./nginx/nginx.conf
+      target: /etc/nginx/nginx.conf
+   depends_on:
+    - backend
+    
+
+#   petclinic:
+#     build: ./spring-database
+#     # image: mysql:5.7.8
+#     restart: always
+#     networks: 
+#      - default
+#      - my_network
+#     environment:
+#       MYSQL_DATABASE: 'petclinic'
+#       MYSQL_USER: ${MY_USER}
+#       MYSQL_PASSWORD: ${MY_PASSWORD}
+#       MYSQL_ROOT_PASSWORD: ${R_PASSWORD}    
+#     ports:
+#       - '3306:3306'
+#     expose:
+#       - '3306'
+#     volumes:
+#       - mysql-db:/var/lib/mysql
+
+# Names our volume
+volumes:
+   mysql-db:
+
+networks:
+  my_network:
+    
+      

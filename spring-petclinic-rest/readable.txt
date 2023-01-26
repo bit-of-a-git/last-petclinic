@@ -1,0 +1,4 @@
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED              STATUS                        PORTS                                               NAMES
+ced381672460   restapi                               "/usr/bin/java -jar …"   34 seconds ago       Up 33 seconds                 0.0.0.0:9966->9966/tcp, :::9966->9966/tcp           backend
+8b6dc265f997   cathysimms/spring-petclinic-angular   "nginx -g 'daemon of…"   About a minute ago   Up About a minute (healthy)   80/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   frontend
+45096677721c   439f030630ef                          "/bin/sh -c 'mvn cle…"   18 minutes ago       Exited (1) 17 minutes ago                                                         kind_nash
