@@ -3,7 +3,7 @@ services:
   frontend:
     container_name: spring-petclinic-angular
     build: ./spring-petclinic-angular
-    # image: cathysimms/spring-petclinic-angular:latest
+    image: cathysimms/spring-petclinic-angular:latest
     depends_on:
     - backend
     networks:
@@ -18,7 +18,7 @@ services:
       USER_PASSWORD: ${MY_PASSWORD}
     container_name: spring-petclinic-rest
     build: ./spring-petclinic-rest
-    # image: cathysimms/spring-petclinic-rest:latest
+    image: cathysimms/spring-petclinic-rest:latest
     networks:
     - my_network
     ports:
