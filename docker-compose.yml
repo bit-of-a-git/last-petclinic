@@ -14,8 +14,8 @@ services:
       protocol: tcp
   backend:
     environment:
-      USER_NAME: ${MY_USER}
-      USER_PASSWORD: ${MY_PASSWORD}
+      USER_NAME: ${USER_NAME}
+      USER_PASSWORD: ${USER_PASSWORD}
     container_name: spring-petclinic-rest
     # build: ./spring-petclinic-rest
     image: cathysimms/spring-petclinic-rest:latest
