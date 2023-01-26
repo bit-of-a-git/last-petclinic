@@ -2,7 +2,6 @@ FROM maven:latest AS build-stage
 WORKDIR /build
 COPY . . 
 
-RUN mvn clean package -Dmaven.test.skip=true
 
 FROM openjdk:latest
 WORKDIR /temp
