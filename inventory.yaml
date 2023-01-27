@@ -1,0 +1,9 @@
+all:
+  children:
+    manager:
+      hosts:
+        127.0.0.1:
+    workers:
+      hosts:
+        ip-172-31-0-133.eu-west-2.compute.internal:
+        ip-172-31-4-91.eu-west-2.compute.internal:

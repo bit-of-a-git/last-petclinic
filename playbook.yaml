@@ -1,0 +1,47 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Install Docker
+      ansible.builtin.apt:
+        name:
+          - docker
+          - docker.io
+          - docker-compose
+          - docker-registry
+        state: latest
+        update_cache: true
+
+- hosts: manager
+  become: true
+  tasks:
+    - name: Determine swarm status
+      shell: >
+        docker info | egrep '^Swarm: ' | cut -d ' ' -f2
+      register: swarm_status
+
+    - name: Initialise a new Swarm
+      docker_swarm:
+        state: present
+
+    - name: Update swarm configuration
+      docker_swarm:
+        state: present
+        election_tick: 5
+
+    - name: Determine swarm status
+      shell: >
+        docker info | egrep '^Swarm: ' | cut -d ' ' -f2
+      register: swarm_status
+
+    - name: Get the Swarm info
+      docker_swarm_info:
+      register: info
+
+- hosts: workers
+  become: true
+  tasks:
+    - name: Add nodes
+      docker_swarm:
+        state: join
+        join_token: "{{ hostvars['127.0.0.1']['info']['swarm_facts']['JoinTokens']['Worker'] }}"
+        remote_addrs: ['172.31.1.34:2377']
