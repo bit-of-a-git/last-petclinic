@@ -72,7 +72,9 @@ pipeline{
                     sshagent(['Docker_Swarm_Manager_SSH']) {
                         withCredentials([string(credentialsId: 'MY_USER', variable: 'USER_NAME'), string(credentialsId: 'MY_PASSWORD', variable: 'USER_PASSWORD')]) {
                             
+                            // docker service rm only in for demo purposes to remove services from inmemory stack
                             sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.8.21.159 docker service rm petclinic_backend petclinic_frontend petclinic_nginx '
+                                
                             sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.8.21.159 export USER_NAME=${USER_NAME} '
                             sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.8.21.159 export USER_PASSWORD=${USER_PASSWORD} '
                             sh 'scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@3.8.21.159: '
